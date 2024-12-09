@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Home Page</title>
+  <link rel="stylesheet" href="index.css">
+
+</head>
+<style>
+    div > a {
+      text-decoration: none;
+    }
+</style>
+
+<body>
+  <div id="nav">
+    <h1>Masai Todo App</h1>
+    <a href="./index.html">Home </a>
+    <a href="./completed.html">Completed </a>
+    <a href="./favourites.html">Favourites</a>
+  </div>
+
+
+  <div id="main">
+    <div id="create">
+      <h1 style="text-align: center; padding-top: 50px; font-size: 40px;">Create a New Task</h1>
+      <form id="form">
+        <!-- Use this form for data input  -->
+        <input type="text" id="name" placeholder="Task Name" /><br><br>
+
+        <select id="type">
+          <option value="">Select Task Type</option>
+          <option value="Assignment">Assignment</option>
+          <option value="Evaluation">Evaluation</option>
+          <option value="Quiz">Quiz</option>
+        </select><br><br>
+
+        <label for="" style="padding-right: 75px;">Date:- </label><br>
+        <input type="date" id="date" /><br><br>
+
+        <select id="priority">
+          <option value="">Select Priority</option>
+          <option value="Low">Low</option>
+          <option value="Medium">Medium</option>
+          <option value="Urgent">Urgent</option>
+        </select><br><br>
+        <input id="submit" type="submit" value="Submit" /><br><br>
+      </form>
+    </div>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Task Name</th>
+          <th>Task Type</th>
+          <th>Completion Date</th>
+          <th>Priority</th>
+          <th>Mark As Completed</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- Append the elements here using JS and DOM  -->
+      </tbody>
+    </table>
+  </div>
+</body>
+<script src="./script/index.js">
+  // Wait for the DOM to load
+  document.addEventListener("DOMContentLoaded", function () {
+    const form = document.getElementById("form");
+    const tbody = document.querySelector("tbody");
+
+    // Handle form submission
+    form.addEventListener("submit", function (event) {
+      event.preventDefault(); // Prevent default form submission
+
+      // Retrieve input values
+      const taskName = document.getElementById("name").value;
+      const taskType = document.getElementById("type").value;
+      const taskDate = document.getElementById("date").value;
+      const taskPriority = document.getElementById("priority").value;
+
+      console.log(taskName)
+      // Validate input
+      if (!taskName || !taskType || !taskDate || !taskPriority) {
+        alert("Please fill in all fields.");
+        return;
+      }
+
+      // Create a new row for the table
+      const row = document.createElement("tr");
+
+      // Add task details as table cells
+      row.innerHTML = `
+      <td>${taskName}</td>
+      <td>${taskType}</td>
+      <td>${taskDate}</td>
+      <td>${taskPriority}</td>
+      <td><button class="mark-completed">Mark as Completed</button></td>
+    `;
+
+      // Append the new row to the table body
+      tbody.appendChild(row);
+
+      // Reset the form
+      form.reset();
+
+      // Add functionality to the "Mark as Completed" button
+      row.querySelector(".mark-completed").addEventListener("click", function () {
+        row.style.textDecoration = "line-through"; // Strikethrough for completed tasks
+        this.disabled = true; // Disable the button
+      });
+    });
+  });
+
+</script>
+
+</html>
